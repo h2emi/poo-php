@@ -17,7 +17,7 @@ $dbTools = new DatabaseTools("mysql", "poo", "root", "root");
 
 
 /* ligne magique qui affiche les erreurs */
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $request = $_SERVER['REQUEST_URI'];
 $uri = parse_url($request, PHP_URL_PATH);
@@ -26,12 +26,10 @@ switch ($uri) {
     case '/':
         require __DIR__ . '/pages/homepage.php';
         break;
-    case '/article':
-        require __DIR__ . '/pages/article.php';
+    case '/new':
+        require __DIR__ . '/pages/new.php';
         break;
-    case '/newArticle':
-        require __DIR__ . '/pages/newArticle.php';
-        break;
+   
         
     default:
         require __DIR__ . '/pages/homepage.php';
