@@ -41,4 +41,25 @@ class PlantTools
         }
         return $plants;
     }
+
+
+    public function selectByCategoryName()
+    {
+        $results = $this->databasetools->executeQuery("SELECT * FROM Plante INNER JOIN Category ON plant_category = cat_id
+        WHERE plant_name LIKE '%" .  $_POST['parCategorie'] . "%'");
+
+        $plants = [];
+        foreach ($results as $result) {
+            $plant = new Plant();
+            $plant = $this->hydratePlant($plant, $result);
+
+            $category = new Category();
+            $category = $this->categoryTools->hydrateCategory($category, $result);
+    
+            $plant->setCategory($category);
+
+            array_push($plants, $plant);
+        }
+        return $plants;
+    }
 }

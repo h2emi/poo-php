@@ -7,7 +7,6 @@ use App\Models\CategoryTools;
 $plantTools = new PlantTools($dbTools);
 $categoryTools = new CategoryTools($dbTools);
 
-
 ?>
 
 
@@ -31,11 +30,19 @@ $categoryTools = new CategoryTools($dbTools);
             <input type="text" name="parCategorie" class="col-4 form-control">
             <input type="submit" class="btn btn-primary" value="Trier">
         </form>
-        <?php echo $_POST['parCategorie'];?>
+        <?php
+         
+        if ($_POST['parCategorie']) {
+            $plants = $plantTools->selectByCategoryName();
+            $tools->prettyVarDump($plants);
+        }?>
+
 
         <h4 class="mt-4">Liste des plantes</h4>
+        <!-- liste de mes plantes -->
         <table class="table">
             <thead class="thead-dark">
+
                 <tr>
                     <th scope="col">Nom</th>
                     <th scope="col">Categorie</th>
