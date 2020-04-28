@@ -4,19 +4,23 @@ use App\Tools\DevTools;
 use App\Tools\LibsLoader;
 use App\Tools\DatabaseTools;
 
+use App\Models\Plant;
+use App\Models\PlantTools;
+use App\Models\CategoryTools;
+
 $loader = require '../vendor/autoload.php';
 
 //instancier et appeller les librairies externes
 $libsLoader = new LibsLoader();
 $libsLoader->loadLibrairies();
-
 //instancier un devTool
 $tools = new DevTools();
-
 //instancier un tool pour pouvoir utiliser la BDD
-
 $dbTools = new DatabaseTools("mysql", "poo", "root", "root");
 
+//instancier un tool qui fera référence à un model
+$plantTools = new PlantTools($dbTools);
+$categoryTools = new CategoryTools($dbTools);
 
 ?>
 
@@ -36,6 +40,31 @@ $dbTools = new DatabaseTools("mysql", "poo", "root", "root");
 
  <body>
      <div class="container">
+
+         <h4>Liste des plantes</h4>
+         <table class="table">
+             <thead class="thead-dark">
+                 <tr>
+                     <th scope="col">Nom</th>
+                     <th scope="col">Categorie</th>
+                     <th scope="col">Price</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 <?php
+                 $plants = $plantTools->getAllPlants();
+                 
+    foreach ($plants as $plant) {?>
+                 <tr>
+                     <td><?= $plant->getName() ?></td>
+                     <td><?php echo $plant->getCategory()->getName() ?></td>
+                     <td><?= $plant->getPrice() ?>€</td>
+
+                 </tr>
+                 <?php }?>
+             </tbody>
+         </table>
+
 
 
 
