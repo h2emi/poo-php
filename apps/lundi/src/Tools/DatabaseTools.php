@@ -42,22 +42,15 @@ class DatabaseTools
         return $result->fetchAll();
     }
 
-    /*
-     * un param serait = ["paramKey" => ":name", "paramValue" => "Claude"]
-     */
-
-    public function insertQuery($sql, $params)
+    
+    public function executePrepare($sql)
     {
-        foreach ($params as $param) {
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->bindParam($param["paramKey"], $param["paramValue"]);
-            $stmt->execute();
-        }
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt;
     }
 
-    public function selectByNameInTable($tableName, $name)
+    public function numberQuery($SQL)
     {
-        $result = $this->pdo->query("SELECT * FROM $tableName WHERE name = '$name'");
-        return $result->fetch();
+        $result = $this->pdo->query($SQL);
     }
 }
