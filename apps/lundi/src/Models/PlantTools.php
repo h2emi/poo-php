@@ -46,7 +46,7 @@ class PlantTools
     public function selectByCategoryName()
     {
         $results = $this->databasetools->executeQuery("SELECT * FROM Plante INNER JOIN Category ON plant_category = cat_id
-        WHERE plant_name LIKE '%" .  $_POST['parCategorie'] . "%'");
+        WHERE cat_name LIKE '%" .  $_POST['parCategorie'] . "%'");
 
         $plants = [];
         foreach ($results as $result) {
@@ -61,5 +61,24 @@ class PlantTools
             array_push($plants, $plant);
         }
         return $plants;
+    }
+
+
+    public function addNewPlant($name, $price, $category)
+    {
+        /* $params = [
+            ["paramKey" => ":name", "paramValue" => $plant->getName()],
+            ["paramKey" => ":price", "paramValue" => $plant->getPrice()],
+            ["paramKey" => ":category", "paramValue" => $plant->getCategory()->getId()]
+        ]; */
+        
+        $re = $this->databasetools->executePrepare("INSERT INTO Plante (plant_name , plant_price , plant_category) VALUES (:name , :price , :category)");
+        $re->bindParam(':name', $name);
+        $re->bindParam(':price', $price);
+        $re->bindParam(':category', $category);
+
+        $re->execute();
+        
+        //$stmt->execute(array("name"=>$name , "price"=>$price ,"category"=>$category));
     }
 }

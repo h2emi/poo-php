@@ -46,13 +46,10 @@ class DatabaseTools
      * un param serait = ["paramKey" => ":name", "paramValue" => "Claude"]
      */
 
-    public function insertQuery($sql, $params)
+    public function executePrepare($sql)
     {
-        foreach ($params as $param) {
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->bindParam($param["paramKey"], $param["paramValue"]);
-            $stmt->execute();
-        }
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt;
     }
 
     public function selectByNameInTable($tableName, $name)

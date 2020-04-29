@@ -30,7 +30,6 @@ switch ($uri) {
         require __DIR__ . '/pages/new.php';
         break;
    
-        
     default:
         require __DIR__ . '/pages/homepage.php';
         break;
