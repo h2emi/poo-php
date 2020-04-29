@@ -7,6 +7,15 @@ use App\Models\CategoryTools;
 $plantTools = new PlantTools($dbTools);
 $categoryTools = new CategoryTools($dbTools);
 
+
+//trier par catégorie
+if ($_POST['parCategorie']) {
+    $plants = $plantTools->selectByCategoryName();
+//$tools->prettyVarDump($plants);
+} else {
+    $plants = $plantTools->getAllPlants();
+}
+
 ?>
 
 
@@ -25,17 +34,34 @@ $categoryTools = new CategoryTools($dbTools);
 
 <body>
     <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="http://localhost:9090/">Home</a>
+
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:9090/new">Ajouter</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href=""></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href=""></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
         <form action="" method="post" class="row mt-4">
             <input type="text" name="parCategorie" class="col-4 form-control">
             <input type="submit" class="btn btn-primary" value="Trier">
         </form>
-        <?php
-         
-        if ($_POST['parCategorie']) {
-            $plants = $plantTools->selectByCategoryName();
-            $tools->prettyVarDump($plants);
-        }?>
+        <a href="http://localhost:9090/">Reset</a>
+
+
 
 
         <h4 class="mt-4">Liste des plantes</h4>
@@ -51,7 +77,7 @@ $categoryTools = new CategoryTools($dbTools);
             </thead>
             <tbody>
                 <?php
-                 $plants = $plantTools->getAllPlants();
+                 
                  
     foreach ($plants as $plant) {?>
                 <tr>
@@ -63,6 +89,7 @@ $categoryTools = new CategoryTools($dbTools);
                 <?php }?>
             </tbody>
         </table>
+
 
 
 
